@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Task</string>
+    <string name="textlogin">登录</string>
+    <string name="text_login">账号：</string>
+    <string name="hint_login">请输入账号</string>
+    <string name="text_paw">密码：</string>
+    <string name="login">登录</string>
+    <string name="regist">无账号，前往注册</string>
+    <string name="im">图片</string>
+    <string name="hint_paw">请输入密码</string>
+    <string name="hint1">请输账号</string>
+    <string name="btregister">立即注册</string>
+    <string name="textview">确认密码：</string>
+    <string name="hintagin">请确认密码</string>
+    <string name="btcancel">注销账户</string>
+    <string name="item_about">关于</string>
+    <string name="itm_back">退出</string>
+</resources>
