@@ -15,4 +15,8 @@
     <string name="btcancel">注销账户</string>
     <string name="item_about">关于</string>
     <string name="itm_back">退出</string>
+    <string name="btupdate">修改密码</string>
+    <string name="uptext1">账号</string>
+    <string name="uptext2">请输入新密码</string>
+    <string name="newhintpaw">请输入新的密码</string>
 </resources>

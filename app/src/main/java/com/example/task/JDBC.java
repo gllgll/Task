@@ -19,6 +19,7 @@ public class JDBC {
         //定义一些启动JDBC需要的参数，分别是ip地址，端口号，用户名和密码，以及创建与数据库连接时要用到的url
 
         String ip = "10.0.2.2";
+//        String ip = "10.102.212.118";
         int port = 3306;
         String user = "root";
         String passwd = "123456";

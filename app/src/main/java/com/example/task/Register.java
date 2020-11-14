@@ -54,7 +54,7 @@ public class Register extends AppCompatActivity {
                 } else {
                     //添加依赖，网址  https://github.com/ForgetAll/LoadingDialog
                     final LoadingDialog loadingDialog = new LoadingDialog(Register.this);
-                    loadingDialog.setLoadingText("登录中...")
+                    loadingDialog.setLoadingText("注册中...")
                             .show();
                     new Thread() {
                         @Override

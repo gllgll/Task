@@ -1,6 +1,7 @@
 package com.example.task;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -8,6 +9,7 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,9 +18,11 @@ import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,7 +37,7 @@ import java.sql.Statement;
 import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
-    Button buttonLogin, buttonRegister, buttonCancel;
+    Button buttonLogin, buttonRegister, buttonCancel, buttonUpdate;
     EditText editLogin, editPw;
 
     @Override
@@ -44,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.about:
                 Context context;
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -68,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         buttonLogin = findViewById(R.id.btn_login);
         buttonRegister = findViewById(R.id.btn_register);
         buttonCancel = findViewById(R.id.bt_cancel);
+        buttonUpdate = findViewById(R.id.btn_update);
         editLogin = findViewById(R.id.et_username);
         editPw = findViewById(R.id.et_password);
 
@@ -88,8 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 final String usePw = editPw.getText().toString().trim();
 
                 final LoadingDialog loadingDialog = new LoadingDialog(MainActivity.this);
-                loadingDialog.setSuccessText("加载中...").show();
-
+                loadingDialog.setLoadingText("登录中...").show();
                 new Thread() {
                     @Override
                     public void run() {
@@ -135,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 final EditText editText = new EditText(MainActivity.this);
                 editText.setHint("请输入要注销的账户");
                 editText.setSingleLine();
-                if(TextUtils.isEmpty(editText.getText().toString())){
+                if (TextUtils.isEmpty(editText.getText().toString())) {
                     Spanned msg = Html.fromHtml("<font color = red>内容不能为空</font>");
                     editText.setError(msg);
                 }
@@ -183,6 +187,56 @@ public class MainActivity extends AppCompatActivity {
                             }
                         })
                         .show();
+            }
+        });
+
+        //修改
+        buttonUpdate.setOnClickListener(new View.OnClickListener() {
+
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                final View DialogView = LayoutInflater.from(MainActivity.this).inflate(R.layout.update, null, false);
+                final  EditText Login = DialogView.findViewById(R.id.editTextName);
+                final  EditText Pas = DialogView.findViewById(R.id.editTextNum);
+                builder.setTitle("修改密码")
+                        .setView(DialogView)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                new Thread() {
+                                    @Override
+                                    public void run() {
+                                        Looper.prepare();
+                                        Connection conn = null;
+                                        PreparedStatement pstm = null;
+//                                        super.run();
+                                        try {
+                                            conn = JDBC.JDBC_connection();
+                                            Log.d("更新", "驱动数据库加载成功");
+//                                            String sql_update = "update info set pas='" + "457" + "' where login='" + "123" + "'";
+                                            String sql_update = "update info set pas='" + Pas.getText().toString() + "' where login='" + Login.getText().toString() + "'";
+                                            Log.d("更新", sql_update);
+                                            pstm = conn.prepareStatement(sql_update);
+
+                                            pstm.executeUpdate();
+                                            conn.close();
+                                            pstm.close();
+                                            Looper.loop();
+                                        } catch (SQLException e) {
+                                            e.printStackTrace();
+                                        } catch (ClassNotFoundException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }.start();
+
+                            }
+                        })
+                        .setNegativeButton("取消", null)
+                        .show();
+
             }
         });
     }
