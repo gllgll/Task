@@ -5,15 +5,11 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -22,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -34,7 +29,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
     Button buttonLogin, buttonRegister, buttonCancel, buttonUpdate;
@@ -50,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:
-                Context context;
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("关于本软件")
                         .setMessage("本软件仅实现Android连接MySQL数据库，只具有基本的增删改查功能！")
@@ -236,7 +229,6 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setNegativeButton("取消", null)
                         .show();
-
             }
         });
     }
